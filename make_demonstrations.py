@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # This file is modified from:
-# https://github.com/carla-simulator/carla/blob/
-# 2c8f55ad3636a8c7999393f0d300fb1434b5fa31/PythonAPI/examples/manual_control.py
-# which author: Pierre Sermanet, Kelvin Xu, and Sergey Levine,
-# Unsupervised perceptual rewards for imitation learning,
-# Proceedings of Robotics: Science and Systems (RSS) (2017).
+# https://github.com/carla-simulator/carla/blob/2c8f55ad3636a8c7999393f0d300fb1434b5fa31/PythonAPI/examples/manual_control.py
+# Alexey Dosovitskiy, German Ros, Felipe Codevilla, Antonio Lopez, and Vladlen Koltun,
+# CARLA: An open urban driving simulator, Proceedings of the 1st Annual Conference on Robot
+# Learning, 2017, pp. 1–16.
 
 
 """ Creates expert demonstrations into 'images' folder
