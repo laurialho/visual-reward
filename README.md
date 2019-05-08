@@ -41,3 +41,7 @@ Intel Core i7-7820X,
 64 GB RAM, 
 2x GTX 1080 Ti,
 512 GB NVME SSD.
+
+## License 
+
+Take a look of license file.
