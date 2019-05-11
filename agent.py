@@ -1,8 +1,8 @@
 # This file is modified from:
 # https://github.com/carla-simulator/carla/blob/2c8f55ad3636a8c7999393f0d300fb1434b5fa31/PythonAPI/examples/manual_control.py
-# which author: Pierre Sermanet, Kelvin Xu, and Sergey Levine,
-# Unsupervised perceptual rewards for imitation learning,
-# Proceedings of Robotics: Science and Systems (RSS) (2017).
+# Alexey Dosovitskiy, German Ros, Felipe Codevilla, Antonio Lopez, and Vladlen Koltun,
+# CARLA: An open urban driving simulator, Proceedings of the 1st Annual Conference on Robot
+# Learning, 2017, pp. 1–16.
 
 """Carla client for RL
     F1           : toggle HUD
@@ -90,7 +90,6 @@ except ImportError:
 
 
 import cv2
-from cv2 import imread, imwrite, resize, INTER_CUBIC
 
 from keras.models import load_model
 import tensorflow as tf
@@ -135,7 +134,6 @@ class Agent:
     _collision = None
     _out_of_area = None
     _done = False
-    _first_image = True
     _image = None
     _prediction = None
     _reward_observation = 0
@@ -1069,9 +1067,7 @@ class CameraManager(object):
         if not Agent._update_needed:
             return
         Agent._update_needed = False
-        # Stores copy of array
         array = None
-        img = None
         if self._sensors[self._index][0].startswith('sensor.lidar'):
             points = np.frombuffer(image.raw_data, dtype=np.dtype('f4'))
             points = np.reshape(points, (int(points.shape[0]/3), 3))
@@ -1094,9 +1090,7 @@ class CameraManager(object):
             self._surface = pygame.surfarray.make_surface(array.swapaxes(0, 1))
 
             # Get image in shape 299x299x3
-            img = cv2.cvtColor(cv2.resize(array, (299,299), interpolation=cv2.INTER_CUBIC), cv2.COLOR_BGR2RGB)
-            # Update agent
-            Agent._image = img
+            Agent._image = cv2.cvtColor(cv2.resize(array, (299,299), interpolation=cv2.INTER_CUBIC), cv2.COLOR_BGR2RGB)
 
         if self._recording:
             if Agent._user_control == 1:
@@ -1109,7 +1103,7 @@ class CameraManager(object):
                     os.mkdir(directory_filename)
                 image_filename = directory_filename + '%08d' % image.frame_number
                 # Save resized image
-                imwrite(image_filename+".png",img)
+                imwrite(image_filename+".png",Agent._image)
                 # image.save_to_disk(image_filename)
                 # Save driving info
                 with open(image_filename+".txt", "w+") as text_file:
