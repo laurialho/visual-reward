@@ -67,7 +67,6 @@ def run_simulator(args, reward_model_path, action_model_path):
             agent_start_image = Agent._image
         else:
             Agent._image = agent_start_image
-
         # This holds the timer that random action is kept
         random_time = 0
         # How long random action is kept.
@@ -85,7 +84,8 @@ def run_simulator(args, reward_model_path, action_model_path):
         while True:
             step = step+1
             # Store current image
-            action = PG.choose_action(Agent._image)
+            observation = Agent._image
+            action = PG.choose_action(observation)
 
             # Select whether to take random action:
             if args.random_action_prob > 0 and next_random == 0:
@@ -151,7 +151,7 @@ def run_simulator(args, reward_model_path, action_model_path):
                         '-'+str(step)+'.png',Agent._image)
 
             # Store transition for training
-            PG.store_transition(Agent._image, action, reward)
+            PG.store_transition(observation, action, reward)
 
             if Agent._done:
                 episode_rewards_sum = sum(PG.episode_rewards)
@@ -163,8 +163,7 @@ def run_simulator(args, reward_model_path, action_model_path):
                 print("Sum of episode rewards: ", episode_rewards_sum)
 
                 # Train
-                discounted_episode_rewards_norm = PG.learn()
-
+                PG.learn()
 
                 if os.path.exists(action_model_path+'_rewards.csv') is False:
                     with open(action_model_path+'_rewards.csv', 'a') as the_file:
@@ -180,7 +179,7 @@ def run_simulator(args, reward_model_path, action_model_path):
                         +str(episode_rewards_sum)+';'+str(max_reward_so_far)\
                         +';'+str(args.gamma)+'\n')
                 agent.env_restart()
-                step = -1
+                step = -1               
                 break
     # Destroy agent
     if agent._world is not None:
