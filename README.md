@@ -1,6 +1,6 @@
 # Visual Reward for Autonomous Driving
 
-All in one package for demonstrating visual reward in reinforcement learning with Carla driving simulator. This code is used in bachelor's thesis Visual Reward for Autonomous Driving (http://bsc.laurialho.fi).
+All in one package for demonstrating visual reward in reinforcement learning with Carla driving simulator. This code is used in bachelor's thesis Visual Reward for Autonomous Driving (http://laurialho.fi/visual-reward).
 
 ## How to install
 
